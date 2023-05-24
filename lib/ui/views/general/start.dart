@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import "../tabs/home.dart";
+import "../screens/home.dart";
+import '../../../configs/theme.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomTabBar(),
+    return MaterialApp(
+      theme: Theming.lightTheme,
+      home: const BottomTabBar(),
     );
   }
 }
@@ -23,7 +25,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    HomeTab(),
+    const HomeScreen(),
     Container(
       child: Center(child: Text("To Do")),
       color: Colors.white,

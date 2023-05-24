@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import './colors.dart';
 import './size.dart';
 
-class Themings {
+class Theming {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     colorScheme: const ColorScheme.light().copyWith(
@@ -12,25 +12,45 @@ class Themings {
     ),
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
-        fontSize: Size.xl,
+        color: AppColors.black,
+        fontSize: AppSizes.xl,
         fontWeight: FontWeight.bold,
       ),
       headlineMedium: TextStyle(
-        fontSize: Size.lg,
+        color: AppColors.black,
+        fontSize: AppSizes.lg,
         fontWeight: FontWeight.w700,
       ),
       headlineSmall: TextStyle(
-        fontSize: Size.md,
+        color: AppColors.black,
+        fontSize: AppSizes.md,
         fontWeight: FontWeight.w700,
       ),
       bodyMedium: TextStyle(
-        fontSize: Size.md,
+        color: AppColors.black,
+        fontSize: AppSizes.md,
         fontWeight: FontWeight.normal,
       ),
       bodySmall: TextStyle(
+        color: AppColors.black,
         fontSize: 12,
         fontWeight: FontWeight.normal,
+      ),
+      labelSmall: TextStyle(
+        color: AppColors.black,
+        fontSize: AppSizes.md,
       )
+    ),
+    inputDecorationTheme: const InputDecorationTheme().copyWith(
+        labelStyle: const TextStyle(
+            fontSize: AppSizes.lg,
+            fontWeight: FontWeight.w600
+        ),
+        hintStyle: const TextStyle(
+          color: AppColors.placeholderGray,
+          fontSize: AppSizes.md,
+          fontWeight: FontWeight.normal,
+        )
     )
     // textTheme:
   );
