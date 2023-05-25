@@ -44,12 +44,15 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
       return shouldPop;
     }
 
-    if (widget.detailType == DetailType.create) {
-      ToDo itemToAdd = ToDo(id: widget.toDoId, title: this.title);
-      await toDoHelper.insertToDo(itemToAdd);
-    } else if (widget.detailType == DetailType.edit) {
-      ToDo itemToUpdate = ToDo(id: widget.toDoId, title: title);
-      await toDoHelper.updateToDo(itemToUpdate);
+    switch (widget.detailType) {
+      case DetailType.create:
+        ToDo itemToAdd = ToDo(id: widget.toDoId, title: this.title);
+        await toDoHelper.insertToDo(itemToAdd);
+        break;
+      case DetailType.edit:
+        ToDo itemToUpdate = ToDo(id: widget.toDoId, title: title);
+        await toDoHelper.updateToDo(itemToUpdate);
+        break;
     }
 
     if (context.mounted) {

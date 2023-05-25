@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             right: AppSizes.xl,
             bottom: AppSizes.xl,
             child: FloatingActionButton(
+              elevation: 0,
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: AppColors.white,
               onPressed: createPushToDoDetailScreen(

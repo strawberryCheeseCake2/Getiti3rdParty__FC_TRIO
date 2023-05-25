@@ -46,28 +46,26 @@ class Theming {
           fontSize: AppSizes.md,
         )),
     inputDecorationTheme: const InputDecorationTheme().copyWith(
-      labelStyle: const TextStyle(
-          color: AppColors.black,
-          fontSize: AppSizes.xl,
-          fontWeight: FontWeight.w500),
-      hintStyle: const TextStyle(
-        color: AppColors.placeholderGray,
-        fontSize: AppSizes.md,
-        fontWeight: FontWeight.normal,
-      ),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(
-          width: 0,
-          style: BorderStyle.none,
+        labelStyle: const TextStyle(
+            color: AppColors.black,
+            fontSize: AppSizes.xl,
+            fontWeight: FontWeight.w500),
+        hintStyle: const TextStyle(
+          color: AppColors.placeholderGray,
+          fontSize: AppSizes.md,
+          fontWeight: FontWeight.normal,
         ),
-      ),
-      filled: true,
-      fillColor: AppColors.white,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16.0
-      )
-    ), // textTheme:
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            width: 0,
+            style: BorderStyle.none,
+          ),
+        ),
+        filled: true,
+        fillColor: AppColors.white,
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16.0)), // textTheme:
     cardTheme: CardTheme(
       color: AppColors.white,
       shape: RoundedRectangleBorder(
