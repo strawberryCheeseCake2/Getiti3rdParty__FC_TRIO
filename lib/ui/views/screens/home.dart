@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ToDoHelper toDoHelper = ToDoHelper();
-  List<ToDo> todoList = [];
+  List<ToDo> toDoList = [];
   bool shouldUpdateToDoList = false;
 
   @override
@@ -27,14 +27,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void loadToDos() async {
-    todoList = await toDoHelper.getToDos();
-    updateToDoListView(todoList);
+    toDoList = await toDoHelper.getToDos();
+    updateToDoListView(toDoList);
   }
 
   void updateToDoListView(List<ToDo> todoList) {
     setState(() {
-      this.todoList = todoList;
+      this.toDoList = todoList;
     });
+  }
+
+  void Function() createPushToDoDetailScreen(
+      {required DetailType type, String title = '', required int toDoId}) {
+    return () async {
+      shouldUpdateToDoList = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ToDoDetailScreen(
+                    detailType: type,
+                    existingTitle: title,
+                    toDoId: toDoId,
+                  )));
+
+      if (shouldUpdateToDoList) {
+        loadToDos();
+      }
+    };
   }
 
   @override
@@ -47,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(flex: 3, child: _buildHeader(context)),
               Expanded(flex: 7, child: _buildToDoSection(context)),
-
             ],
           ),
         ),
@@ -57,26 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: AppColors.white,
-              onPressed: () async {
-                shouldUpdateToDoList = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ToDoDetailScreen(
-                          existingTitle: "",
-                          detailType: DetailType.create,
-                          toDoId: UniqueKey().hashCode,
-                        )));
-
-                if (shouldUpdateToDoList) {
-                  print("should up");
-                  loadToDos();
-                }
-              },
+              onPressed: createPushToDoDetailScreen(
+                type: DetailType.create,
+                toDoId: UniqueKey().hashCode,
+              ),
               child: const Icon(Icons.add),
             ))
       ],
     );
-
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -164,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildWeeklyCalendar(BuildContext context) {
-    return Expanded(
+    return const Expanded(
       flex: 2,
       child: Column(
         children: [
@@ -184,8 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            "할 일",
-            style: Theme.of(context).textTheme.headlineMedium,
+            "To Do",
+            style: GoogleFonts.notoSans(
+              textStyle: Theme.of(context).textTheme.headlineMedium,
+            ),
           ),
           const SizedBox(
             height: AppSizes.md,
@@ -195,32 +202,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: ListView.builder(
                 key: UniqueKey(),
                 padding: const EdgeInsets.all(0),
-                itemCount: todoList.length,
+                itemCount: toDoList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
+                    padding: const EdgeInsets.only(bottom: AppSizes.sm),
                     child: TodoCard(
-                      title: todoList[index].title,
-                      onPressed: () async {
-                        shouldUpdateToDoList = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ToDoDetailScreen(
-                                      existingTitle: todoList[index].title,
-                                      detailType: DetailType.edit,
-                                      toDoId: todoList[index].id,
-                                    )));
-
-                        if (shouldUpdateToDoList) {
-                          print("should up");
-                          loadToDos();
-                        }
-                      },
+                      title: toDoList[index].title,
+                      onPressed: createPushToDoDetailScreen(
+                          type: DetailType.edit,
+                          title: toDoList[index].title,
+                          toDoId: toDoList[index].id),
                     ),
                   );
                 }),
           ),
-
         ],
       ),
     );
