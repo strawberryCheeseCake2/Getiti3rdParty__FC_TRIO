@@ -19,12 +19,17 @@ class Theming {
       headlineMedium: TextStyle(
         color: AppColors.black,
         fontSize: AppSizes.lg,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
       ),
       headlineSmall: TextStyle(
         color: AppColors.black,
         fontSize: AppSizes.md,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w600,
+      ),
+      bodyLarge: TextStyle(
+        color: AppColors.black,
+        fontSize: AppSizes.lg,
+        fontWeight: FontWeight.normal,
       ),
       bodyMedium: TextStyle(
         color: AppColors.black,
@@ -51,7 +56,13 @@ class Theming {
           fontSize: AppSizes.md,
           fontWeight: FontWeight.normal,
         )
-    )
-    // textTheme:
+    ), // textTheme:
+    cardTheme: CardTheme(
+      color: AppColors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      elevation: 0,
+  ),
   );
 }

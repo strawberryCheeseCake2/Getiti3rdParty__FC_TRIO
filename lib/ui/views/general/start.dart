@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "../screens/home.dart";
 import '../../../configs/theme.dart';
@@ -48,11 +49,11 @@ class _BottomTabBarState extends State<BottomTabBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(CupertinoIcons.home),
             label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit_square),
+            icon: Icon(CupertinoIcons.pen),
             label: '할 일',
           ),
         ],
