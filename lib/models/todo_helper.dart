@@ -19,7 +19,7 @@ class ToDoHelper {
 
   Future<void> insertToDo(ToDo todo) async {
     final db = await _openDb();
-
+    print(todo);
     todo.id = await db.insert(
       tableName,
       todo.toMap(),
@@ -38,6 +38,26 @@ class ToDoHelper {
         title: maps[i]['title']
       );
     });
+  }
+
+  Future<ToDo?> getToDoById(int id) async {
+    final db = await _openDb();
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isEmpty) {
+      return null;
+    }
+    print(maps);
+    return ToDo(
+      id: maps[0]['id'],
+      title: maps[0]['title'],
+      content: maps[0]['content'],
+    );
   }
 
   Future<void> updateToDo(ToDo todo) async {
@@ -65,7 +85,8 @@ class ToDoHelper {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS todos (
         id INTEGER PRIMARY KEY,
-        title TEXT
+        title TEXT NOT NULL,
+        content TEXT
       )
     ''');
   }

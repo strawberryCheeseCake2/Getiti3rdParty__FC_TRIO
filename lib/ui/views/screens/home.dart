@@ -186,39 +186,52 @@ class _HomeScreenState extends State<HomeScreen> {
         horizontal: AppSizes.md,
         vertical: AppSizes.lg,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            "To Do",
-            style: GoogleFonts.notoSans(
-              textStyle: Theme.of(context).textTheme.headlineMedium,
+      child: toDoList.isEmpty
+          ? Center(
+              child: Text(
+                "아직 작성한\n일기가 없어요",
+                style: GoogleFonts.gowunBatang(
+                  textStyle:
+                      Theme.of(context).textTheme.headlineLarge?.copyWith(
+                            fontWeight: FontWeight.w100,
+                          ),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "일기",
+                  style: GoogleFonts.notoSans(
+                    textStyle: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ),
+                const SizedBox(
+                  height: AppSizes.md,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: ListView.builder(
+                      key: UniqueKey(),
+                      padding: const EdgeInsets.all(0),
+                      itemCount: toDoList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: AppSizes.sm),
+                          child: TodoCard(
+                            title: toDoList[index].title,
+                            onPressed: createPushToDoDetailScreen(
+                                type: DetailType.edit,
+                                title: toDoList[index].title,
+                                toDoId: toDoList[index].id),
+                          ),
+                        );
+                      }),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: AppSizes.md,
-          ),
-          Expanded(
-            flex: 1,
-            child: ListView.builder(
-                key: UniqueKey(),
-                padding: const EdgeInsets.all(0),
-                itemCount: toDoList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: AppSizes.sm),
-                    child: TodoCard(
-                      title: toDoList[index].title,
-                      onPressed: createPushToDoDetailScreen(
-                          type: DetailType.edit,
-                          title: toDoList[index].title,
-                          toDoId: toDoList[index].id),
-                    ),
-                  );
-                }),
-          ),
-        ],
-      ),
     );
   }
 }

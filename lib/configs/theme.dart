@@ -65,7 +65,7 @@ class Theming {
         filled: true,
         fillColor: AppColors.white,
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0)), // textTheme:
+            const EdgeInsets.all(AppSizes.md)), // textTheme:
     cardTheme: CardTheme(
       color: AppColors.white,
       shape: RoundedRectangleBorder(
