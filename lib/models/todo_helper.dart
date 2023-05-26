@@ -46,7 +46,7 @@ class ToDoHelper {
     await db.update(
       tableName,
       todo.toMap(),
-      where: 'id = ${todo.id}',
+      where: 'id = ?',
       whereArgs: [todo.id],
     );
   }
@@ -56,7 +56,7 @@ class ToDoHelper {
 
     await db.delete(
       tableName,
-      where: 'id = $id',
+      where: 'id = ?',
       whereArgs: [id],
     );
   }
