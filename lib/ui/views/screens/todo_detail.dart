@@ -91,9 +91,11 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
                 Text('제목', style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: AppSizes.sm),
                 RoundedTextField(
-                    controller: titleController,
-                    onChanged: (text) => setState(() {title = text;}),
-                    hintText: '할 일을 입력하세요',
+                  controller: titleController,
+                  onChanged: (text) => setState(() {
+                    title = text;
+                  }),
+                  hintText: '할 일을 입력하세요',
                 ),
               ],
             ),
@@ -106,12 +108,13 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       actions: [
-        IconButton.outlined(
-            onPressed: onDeleteButtonPressed,
-            icon: Icon(
-              CupertinoIcons.trash,
-              color: Theme.of(context).colorScheme.error,
-            )),
+        if (widget.detailType != DetailType.create)
+          IconButton.outlined(
+              onPressed: onDeleteButtonPressed,
+              icon: Icon(
+                CupertinoIcons.trash,
+                color: Theme.of(context).colorScheme.error,
+              )),
       ],
       iconTheme: const IconThemeData(
         color: AppColors.black,
