@@ -28,7 +28,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     Container(
-      child: Center(child: Text("To Do")),
+      child: Center(child: Text("일기")),
       color: Colors.white,
     ),
   ];
@@ -54,7 +54,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.pen),
-            label: '할 일',
+            label: '일기',
           ),
         ],
         currentIndex: _selectedIndex,

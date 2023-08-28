@@ -26,17 +26,48 @@ class ToDoDetailScreen extends StatefulWidget {
 
 class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
   bool shouldPop = true;
-  late String title;
+  late String title = "";
+  String? content;
   ToDoHelper toDoHelper = ToDoHelper();
+  ToDo? toDoFromDB;
+
   TextEditingController titleController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+
   bool didUpdateToDo = false;
 
   @override
   void initState() {
     super.initState();
-    title = widget.existingTitle;
-    titleController.text = widget.existingTitle;
+    // title = widget.existingTitle;
+    // titleController.text = widget.existingTitle;
+    if (widget.detailType == DetailType.edit) {
+      loadToDoDetail();
+    }
   }
+
+  void loadToDoDetail() async {
+    toDoFromDB = await toDoHelper.getToDoById(widget.toDoId);
+    if (toDoFromDB == null) {
+      return;
+    }
+    ToDo safeToDo = toDoFromDB!;
+
+    updateUI(title: safeToDo.title, content: safeToDo.content);
+  }
+
+  void updateUI({required String title, String? content}) {
+
+    setState(() {
+      this.title = title;
+      titleController.text = title;
+      if (content != null) {
+        this.content = content;
+        contentController.text = content;
+      }
+    });
+  }
+
 
   Future<bool> onWillPop() async {
     if (title == "") {
@@ -44,12 +75,15 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
       return shouldPop;
     }
 
-    if (widget.detailType == DetailType.create) {
-      ToDo itemToAdd = ToDo(id: widget.toDoId, title: this.title);
-      await toDoHelper.insertToDo(itemToAdd);
-    } else if (widget.detailType == DetailType.edit) {
-      ToDo itemToUpdate = ToDo(id: widget.toDoId, title: title);
-      await toDoHelper.updateToDo(itemToUpdate);
+    switch (widget.detailType) {
+      case DetailType.create:
+        ToDo itemToAdd = ToDo(id: widget.toDoId, title: this.title, content: this.content);
+        await toDoHelper.insertToDo(itemToAdd);
+        break;
+      case DetailType.edit:
+        ToDo itemToUpdate = ToDo(id: widget.toDoId, title: title, content: this.content);
+        await toDoHelper.updateToDo(itemToUpdate);
+        break;
     }
 
     if (context.mounted) {
@@ -88,9 +122,23 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
                 Text('제목', style: Theme.of(context).textTheme.headlineMedium),
                 const SizedBox(height: AppSizes.sm),
                 RoundedTextField(
-                    controller: titleController,
-                    onChanged: (text) => setState(() {title = text;}),
-                    hintText: '할 일을 입력하세요',
+                  controller: titleController,
+                  onChanged: (text) => setState(() {
+                    title = text;
+                  }),
+                  hintText: '제목을 입력하세요',
+                ),
+                SizedBox(height: AppSizes.xl),
+                Text('내용', style: Theme.of(context).textTheme.headlineMedium),
+                const SizedBox(height: AppSizes.sm),
+                RoundedTextField(
+                  controller: contentController,
+                  onChanged: (text) => setState(() {
+                    content = text;
+                  }),
+                  hintText: '오늘 반려 동물과 겪은 일을 기록해보세요',
+                  minLines: 25,
+                  maxLines: 25,
                 ),
               ],
             ),
@@ -103,18 +151,19 @@ class _ToDoDetailScreenState extends State<ToDoDetailScreen> {
   AppBar _buildAppBar() {
     return AppBar(
       actions: [
-        IconButton.outlined(
-            onPressed: onDeleteButtonPressed,
-            icon: Icon(
-              CupertinoIcons.trash,
-              color: Theme.of(context).colorScheme.error,
-            )),
+        if (widget.detailType != DetailType.create)
+          IconButton.outlined(
+              onPressed: onDeleteButtonPressed,
+              icon: Icon(
+                CupertinoIcons.trash,
+                color: Theme.of(context).colorScheme.error,
+              )),
       ],
       iconTheme: const IconThemeData(
         color: AppColors.black,
       ),
       title: Text(
-        "To Do",
+        "일기",
         style: Theme.of(context).textTheme.headlineMedium,
       ),
       backgroundColor: AppColors.white,
