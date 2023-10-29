@@ -1,16 +1,9 @@
-# my_pet_diary
+# My Pet Diary
+반려동물과의 일상을 기록할 수 있는 앱
 
-A new Flutter project.
+## 기술 스택
+- Flutter
+- sqlite
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 스크린샷
+<img src="https://github.com/strawberryCheeseCake2/CorrecToefl/blob/main/my-pet-diary-recording.gif" alt="gif" title="gif" width="250"/>
