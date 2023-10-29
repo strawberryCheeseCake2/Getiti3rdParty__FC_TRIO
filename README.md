@@ -6,4 +6,5 @@
 - sqlite
 
 ## 스크린샷
-<img src="https://github.com/strawberryCheeseCake2/CorrecToefl/blob/main/my-pet-diary-recording.gif" alt="gif" title="gif" width="250"/>
+<img src="https://github.com/strawberryCheeseCake2/Getiti3rdParty__FC_TRIO
+/blob/main/my-pet-diary-recording.gif" alt="gif" title="gif" width="250"/>
